@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BloodHosterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +31,17 @@ class BloodHoster
 
     #[ORM\Column(length: 60)]
     private ?string $email = null;
+
+    /**
+     * @var Collection<int, Donor>
+     */
+    #[ORM\ManyToMany(targetEntity: Donor::class, mappedBy: 'id')]
+    private Collection $donors;
+
+    public function __construct()
+    {
+        $this->donors = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,6 +104,33 @@ class BloodHoster
     public function setEmail(string $string): static
     {
         $this->email = $string;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Donor>
+     */
+    public function getDonors(): Collection
+    {
+        return $this->donors;
+    }
+
+    public function addDonor(Donor $donor): static
+    {
+        if (!$this->donors->contains($donor)) {
+            $this->donors->add($donor);
+            $donor->addId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDonor(Donor $donor): static
+    {
+        if ($this->donors->removeElement($donor)) {
+            $donor->removeId($this);
+        }
 
         return $this;
     }
