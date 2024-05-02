@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BloodHosterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +31,24 @@ class BloodHoster
 
     #[ORM\Column(length: 60)]
     private ?string $email = null;
+
+    /**
+     * @var Collection<int, Bloodbank>
+     */
+    #[ORM\ManyToMany(targetEntity: Bloodbank::class, mappedBy: 'bloodhoster')]
+    private Collection $bloodbank;
+
+    /**
+     * @var Collection<int, bloodcategory>
+     */
+    #[ORM\ManyToMany(targetEntity: bloodcategory::class, inversedBy: 'bloodHosters')]
+    private Collection $blood_categ;
+
+    public function __construct()
+    {
+        $this->bloodbank = new ArrayCollection();
+        $this->blood_categ = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,6 +111,57 @@ class BloodHoster
     public function setEmail(string $string): static
     {
         $this->email = $string;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Bloodbank>
+     */
+    public function getBloodbank(): Collection
+    {
+        return $this->bloodbank;
+    }
+
+    public function addBloodbank(Bloodbank $bloodbank): static
+    {
+        if (!$this->bloodbank->contains($bloodbank)) {
+            $this->bloodbank->add($bloodbank);
+            $bloodbank->addBloodhoster($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBloodbank(Bloodbank $bloodbank): static
+    {
+        if ($this->bloodbank->removeElement($bloodbank)) {
+            $bloodbank->removeBloodhoster($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, bloodcategory>
+     */
+    public function getBloodCateg(): Collection
+    {
+        return $this->blood_categ;
+    }
+
+    public function addBloodCateg(bloodcategory $bloodCateg): static
+    {
+        if (!$this->blood_categ->contains($bloodCateg)) {
+            $this->blood_categ->add($bloodCateg);
+        }
+
+        return $this;
+    }
+
+    public function removeBloodCateg(bloodcategory $bloodCateg): static
+    {
+        $this->blood_categ->removeElement($bloodCateg);
 
         return $this;
     }
