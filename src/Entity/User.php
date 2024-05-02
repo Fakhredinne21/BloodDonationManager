@@ -6,10 +6,11 @@ use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\MappedSuperclass]
 #[ORM\Table(name: '`user`')]
 abstract class User
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

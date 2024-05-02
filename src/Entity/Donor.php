@@ -8,18 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: DonorRepository::class)]
 class Donor extends User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column]
     private ?int $state = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getState(): ?int
     {
