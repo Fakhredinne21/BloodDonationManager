@@ -1,6 +1,13 @@
 body {
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Montserrat', sans-serif;
 }
+.montserrat {
+               font-family: "Montserrat", sans-serif;
+               font-optical-sizing: auto;
+               font-weight: 500;
+               font-style: normal;
+             }
+
 
 /***************************/
 /* Nav 1 Start */
@@ -148,7 +155,7 @@ body {
   background-image: url(../imgs/1.jpg);
   background-size: cover;
   background-repeat: no-repeat;
-  height: 400px;
+  height: 500px;
 }
 
 #sub-header .container {
@@ -390,7 +397,7 @@ body {
 
 #call-us .layer {
   background-color: rgba(5, 5, 5, 0.562);
-  height: 500px;
+  height: 485px;
 }
 
 #call-us h1 {
@@ -411,7 +418,7 @@ body {
   margin: 10px 0px 30px 60px;
   padding: 20px 10px 20px 0px;
   border-radius: 50px;
-  width: 30%;
+  width: 35%;
   background-color: green;
 }
 
@@ -436,7 +443,7 @@ body {
 /* App Start */
 
 #app {
-  background-image: url(../imgs/BG-phone.png);
+  background-color: white;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -983,5 +990,8 @@ body {
   margin-right: auto;
 }
 
+.image_footer{
+  width: 25%;
+}
 /*****************************************************************/
 
