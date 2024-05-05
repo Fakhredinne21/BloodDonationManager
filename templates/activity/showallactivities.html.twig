@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1>All Activities</h1>
+    <ul>
+        {% for activity in activities %}
+            <li>
+                <h2>{{ activity.id }}</h2>
+                <p>Date: {{ activity.date|date('Y-m-d') }}</p>
+                <p>Status: {{ activity.status ? 'Active' : 'Inactive' }}</p>
+            </li>
+        {% else %}
+            <li>No activities found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -16,6 +16,60 @@ class ActivityRepository extends ServiceEntityRepository
         parent::__construct($registry, Activity::class);
     }
 
+    public function findAllActivities(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findActivity(int $id): ?Activity
+    {
+        return $this->find($id);
+    }
+
+    public function createActivity(Activity $activity): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($activity);
+        $em->flush();
+    }
+
+    public function updateActivity(Activity $activity): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($activity);
+        $em->flush();
+    }
+
+    public function deleteActivity(Activity $activity): void
+    {
+        $em = $this->getEntityManager();
+        $em->remove($activity);
+        $em->flush();
+    }
+
+        public function findActiveActivities(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.status = :status')
+            ->setParameter('status', true)
+            ->orderBy('a.date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findActivitiesByDateRange(\DateTimeInterface $startDate, \DateTimeInterface $endDate): array
+{
+    return $this->createQueryBuilder('a')
+        ->andWhere('a.date BETWEEN :start AND :end')
+        ->setParameter('start', $startDate)
+        ->setParameter('end', $endDate)
+        ->orderBy('a.date', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
     //    /**
     //     * @return Activity[] Returns an array of Activity objects
     //     */
