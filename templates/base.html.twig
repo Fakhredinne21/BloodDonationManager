@@ -1,6 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
 
+{% block header %}
+    <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,11 +23,6 @@
 
 <body>
 
-<!-- Navbar 1 Start -->
-
-<!-- Navbar 1 End -->
-
-<!-- Navbar 2 Start -->
 <section id="Nav2">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <img src="{{ asset('UI/imgs/blood-donation-svgrepo-com.svg') }}" width="5%"></img>
@@ -56,14 +52,16 @@
         </div>
     </nav>
 </section>
-<!-- Navbar 2 End -->
+{% endblock header %}
+
 {% block body %}
-{% endblock %}
+
+{% endblock body %}
 <!-- Header Start -->
 
 <!-- Header End -->
 
-
+{% block footer %}
 <!-- Footer Start -->
 <section id="footer">
     <div class="container">
@@ -123,3 +121,4 @@
 </body>
 
 </html>
+{% endblock footer %}
