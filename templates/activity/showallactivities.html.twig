@@ -1,11 +1,18 @@
 {% extends 'base.html.twig' %}
 
+
 {% block body %}
+    <style>
+        h1{
+            margin-top: 10px;
+            margin-left: 25px;
+        }
+    </style>
     <h1>All Activities</h1>
+    <a href="{{ path('activity_new') }}" class="btn btn-success mb-3">Add New Activity</a>
     <table class="table mx-auto" style="width: 95%;">
         <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Date</th>
             <th scope="col">Status</th>
             <th scope="col">Actions</th>
@@ -14,12 +21,12 @@
         <tbody>
         {% for activity in activities %}
             <tr>
-                <th scope="row">{{ activity.id }}</th>
+
                 <td>{{ activity.date|date('Y-m-d') }}</td>
                 <td>{{ activity.status ? 'Active' : 'Inactive' }}</td>
                 <td>
                     <a href="{{ path('activity_edit', {'id': activity.id}) }}" class="btn btn-primary">Edit</a>
-                    <button onclick="deleteActivity({{ activity.id }})" class="btn btn-danger">Delete</button>
+                    <a href="{{ path('activity_delete', {'id': activity.id}) }}" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         {% else %}

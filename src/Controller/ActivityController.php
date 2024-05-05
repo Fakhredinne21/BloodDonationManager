@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Activity;
 use App\Repository\ActivityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -12,10 +14,13 @@ use Symfony\Component\HttpFoundation\Request; // Add this line
 class ActivityController extends AbstractController
 {
     private ActivityRepository $activityRepository;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(ActivityRepository $activityRepository)
+    public function __construct(ActivityRepository $activityRepository , EntityManagerInterface $entityManager)
     {
         $this->activityRepository = $activityRepository;
+        $this->entityManager = $entityManager;
+
     }
     #[Route('/activity', name: 'app_activity')]
     public function index(): Response
@@ -33,6 +38,26 @@ class ActivityController extends AbstractController
             'activities' => $activities,
         ]);
     }
+    #[Route('/activity/add', name: 'activity_new', methods: ['GET', 'POST'])]
+    public function add(Request $request): Response
+    {
+        if ($request->isMethod('POST')) {
+            $data = $request->request->all();
+
+            $activity = new Activity();
+            $activity->setDate(new \DateTime($data['activity_date']));
+            $activity->setStatus($data['activity_status']);
+
+            $this->entityManager->persist($activity);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('app_showallactivities');
+        }
+
+        // Render the form for GET requests
+        return $this->render('activity/add_form.html.twig');
+    }
+
     #[Route('/activity/delete/{id}', name: 'activity_delete', methods: ['GET', 'POST'])]
     public function delete(int $id, Request $request): Response
     {
