@@ -1,17 +1,32 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
     <h1>All Activities</h1>
-    <ul>
+    <table class="table mx-auto" style="width: 95%;">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
         {% for activity in activities %}
-            <li>
-                <h2>{{ activity.id }}</h2>
-                <p>Date: {{ activity.date|date('Y-m-d') }}</p>
-                <p>Status: {{ activity.status ? 'Active' : 'Inactive' }}</p>
-            </li>
+            <tr>
+                <th scope="row">{{ activity.id }}</th>
+                <td>{{ activity.date|date('Y-m-d') }}</td>
+                <td>{{ activity.status ? 'Active' : 'Inactive' }}</td>
+                <td>
+                    <a href="{{ path('activity_edit', {'id': activity.id}) }}" class="btn btn-primary">Edit</a>
+                    <button onclick="deleteActivity({{ activity.id }})" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
         {% else %}
-            <li>No activities found.</li>
+            <tr>
+                <td colspan="4">No activities found.</td>
+            </tr>
         {% endfor %}
-    </ul>
+        </tbody>
+    </table>
 {% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Edit Activity</h1>
+
+    <form action="{{ path('activity_edit', {'id': activity.id}) }}" method="post">
+        <div class="form-group">
+            <label for="activity_date">Date:</label>
+            <input type="date" id="activity_date" name="activity_date" value="{{ activity.date|date('Y-m-d') }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="activity_status">Status:</label>
+            <select id="activity_status" name="activity_status" required>
+                <option value="1" {% if activity.status %}selected{% endif %}>Active</option>
+                <option value="0" {% if not activity.status %}selected{% endif %}>Inactive</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </form>
+{% endblock %}
