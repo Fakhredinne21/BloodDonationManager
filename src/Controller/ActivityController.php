@@ -25,7 +25,7 @@ class ActivityController extends AbstractController
     #[Route('/activity', name: 'app_activity')]
     public function index(): Response
     {
-        return $this->render('activity/index.html.twig', [
+        return $this->render('activity/index.html.twig.twig', [
             'controller_name' => 'ActivityController',
         ]);
     }

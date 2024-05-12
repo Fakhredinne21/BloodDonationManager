@@ -8,17 +8,20 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DonorRepository::class)]
-class Donor extends User
+class Donor extends Users
 {
 
     #[ORM\Column]
-    private ?int $state = null;
+    private ?int $state = 0;
 
     /**
      * @var Collection<int, BloodHoster>
      */
     #[ORM\ManyToMany(targetEntity: BloodHoster::class, inversedBy: 'donors')]
-    private Collection $id;
+    private Collection $id_hoster;
+
+    #[ORM\Column(length: 255)]
+    private ?string $BloodType = null;
 
     public function __construct()
     {
@@ -38,9 +41,9 @@ class Donor extends User
     }
 
     /**
-     * @return Collection<int, BloodHoster>
+     * @return int|null
      */
-    public function getId(): Collection
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -57,6 +60,18 @@ class Donor extends User
     public function removeId(BloodHoster $id): static
     {
         $this->id->removeElement($id);
+
+        return $this;
+    }
+
+    public function getBloodType(): ?string
+    {
+        return $this->BloodType;
+    }
+
+    public function setBloodType(string $BloodType): static
+    {
+        $this->BloodType = $BloodType;
 
         return $this;
     }

@@ -32,6 +32,7 @@ class NurseRepository extends ServiceEntityRepository
    }
 
 
+
     public function findOneBySomeField($value): ?Nurse
       {
           return $this->createQueryBuilder('n')
