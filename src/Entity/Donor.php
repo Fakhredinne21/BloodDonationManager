@@ -23,6 +23,10 @@ class Donor extends Users
     #[ORM\Column(length: 255)]
     private ?string $BloodType = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->id = new ArrayCollection();
@@ -72,6 +76,18 @@ class Donor extends Users
     public function setBloodType(string $BloodType): static
     {
         $this->BloodType = $BloodType;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

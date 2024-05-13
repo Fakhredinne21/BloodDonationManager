@@ -188,13 +188,13 @@
               <span class="menu-header-text">Pages</span>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <a class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">Account Settings</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="{{ asset('Dashboard/html/pages-account-settings-account.html' }}" class="menu-link">
+                  <a href="{{ asset('Dashboard/html/pages-account-settings-account.html' )}}" class="menu-link">
                     <div data-i18n="Account">Account</div>
                   </a>
                 </li>
@@ -211,7 +211,7 @@
               </ul>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div data-i18n="Authentications">Authentications</div>
               </a>
@@ -227,14 +227,14 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="{{ asset('Dashboard/html/auth-forgot-password-basic.html'}}" class="menu-link" target="_blank">
+                  <a href="{{ asset('Dashboard/html/auth-forgot-password-basic.html')}}" class="menu-link" target="_blank">
                     <div data-i18n="Basic">Forgot Password</div>
                   </a>
                 </li>
               </ul>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
                 <div data-i18n="Misc">Misc</div>
               </a>
@@ -259,9 +259,9 @@
                 <div data-i18n="Basic">Cards</div>
               </a>
             </li>
-            <!-- User interface -->
+
             <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link menu-toggle">
+
                 <i class="menu-icon tf-icons bx bx-box"></i>
                 <div data-i18n="User interface">User interface</div>
               </a>
@@ -328,7 +328,7 @@
                 </li>
                 <li class="menu-item">
                   <a href={{ asset(Dashboard/html/ui-pagination-breadcrumbs.html" class="menu-link">
-                    <div data-i18n="Pagination &amp; Breadcrumbs">Pagination &amp; Breadcrumbs</div>
+
                   </a>
                 </li>
                 <li class="menu-item">
@@ -343,7 +343,7 @@
                 </li>
                 <li class="menu-item">
                   <a href={{ asset(Dashboard/html/ui-tabs-pills.html" class="menu-link">
-                    <div data-i18n="Tabs &amp; Pills">Tabs &amp; Pills</div>
+
                   </a>
                 </li>
                 <li class="menu-item">
@@ -353,7 +353,7 @@
                 </li>
                 <li class="menu-item">
                   <a href={{ asset(Dashboard/html/ui-tooltips-popovers.html" class="menu-link">
-                    <div data-i18n="Tooltips & Popovers">Tooltips &amp; popovers</div>
+
                   </a>
                 </li>
                 <li class="menu-item">
@@ -391,17 +391,16 @@
               </a>
             </li>
 
-            <!-- Forms & Tables -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Forms &amp; Tables</span></li>
-            <!-- Forms -->
+
+
             <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
+
                 <i class="menu-icon tf-icons bx bx-detail"></i>
                 <div data-i18n="Form Elements">Form Elements</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href={{ asset(Dashboard/html/forms-basic-inputs.html" class="menu-link">
+                  <a href={{ asset('Dashboard/html/forms-basic-inputs.html')}}" class="menu-link">
                     <div data-i18n="Basic Inputs">Basic Inputs</div>
                   </a>
                 </li>
@@ -430,7 +429,7 @@
                 </li>
               </ul>
             </li>
-            <!-- Tables -->
+
             <li class="menu-item">
               <a href={{ asset(Dashboard/html/tables-basic.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
@@ -508,7 +507,7 @@
 
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+
                     <div class="avatar avatar-online">
                       <img src={{ asset(Dashboard/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
@@ -533,19 +532,19 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="">
                         <i class="bx bx-cog me-2"></i>
                         <span class="align-middle">Settings</span>
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="">
                         <span class="d-flex align-items-center align-middle">
                           <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
                           <span class="flex-grow-1 align-middle">Billing</span>
@@ -564,16 +563,14 @@
                     </li>
                   </ul>
                 </li>
-                <!--/ User -->
+
               </ul>
             </div>
           </nav>
 
-          <!-- / Navbar -->
 
-          <!-- Content wrapper -->
           <div class="content-wrapper">
-            <!-- Content -->
+
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <div class="row">
@@ -582,7 +579,7 @@
                     <div class="d-flex align-items-end row">
                       <div class="col-sm-7">
                         <div class="card-body">
-                          <h5 class="card-title text-primary">Congratulations John! 🎉</h5>
+                          <h5 class="card-title text-primary">Congratulations John</h5>
                           <p class="mb-4">
                             You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
                             your profile.
@@ -636,7 +633,7 @@
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">Profit</span>
-                          <h3 class="card-title mb-2">$12,628</h3>
+
                           <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
                         </div>
                       </div>
@@ -664,8 +661,7 @@
                                 <i class="bx bx-dots-vertical-rounded"></i>
                               </button>
                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+
                               </div>
                             </div>
                           </div>
@@ -700,9 +696,7 @@
                                 2022
                               </button>
                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
-                                <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                                <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                                <a class="dropdown-item" href="javascript:void(0);">2019</a>
+
                               </div>
                             </div>
                           </div>
@@ -762,9 +756,8 @@
                             </div>
                           </div>
                           <span class="d-block mb-1">Payments</span>
-                          <h3 class="card-title text-nowrap mb-2">$2,456</h3>
-                          <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> -14.82%</small>
-                        </div>
+
+                         </div>
                       </div>
                     </div>
                     <div class="col-6 mb-4">
@@ -786,8 +779,7 @@
                                 <i class="bx bx-dots-vertical-rounded"></i>
                               </button>
                               <div class="dropdown-menu" aria-labelledby="cardOpt1">
-                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+
                               </div>
                             </div>
                           </div>
@@ -844,9 +836,9 @@
                           <i class="bx bx-dots-vertical-rounded"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                          <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                          <a class="dropdown-item" href="">Select All</a>
+                          <a class="dropdown-item" href="">Refresh</a>
+                          <a class="dropdown-item" href="">Share</a>
                         </div>
                       </div>
                     </div>
@@ -936,7 +928,7 @@
                             class="nav-link active"
                             role="tab"
                             data-bs-toggle="tab"
-                            data-bs-target="#navs-tabs-line-card-income"
+                            data-bs-target="navs-tabs-line-card-income"
                             aria-controls="navs-tabs-line-card-income"
                             aria-selected="true"
                           >
@@ -956,7 +948,7 @@
                         <div class="tab-pane fade show active" id="navs-tabs-line-card-income" role="tabpanel">
                           <div class="d-flex p-4 pt-3">
                             <div class="avatar flex-shrink-0 me-3">
-                              <img src={{ asset(Dashboard/assets/img/icons/unicons/wallet.png" alt="User" />
+                              <img src="{{ asset('Dashboard/assets/img/icons/unicons/wallet.png')}}" alt="User" />
                             </div>
                             <div>
                               <small class="text-muted d-block">Total Balance</small>
@@ -984,10 +976,8 @@
                     </div>
                   </div>
                 </div>
-                <!--/ Expense Overview -->
 
-                <!-- Transactions -->
-                <div class="col-md-6 col-lg-4 order-2 mb-4">
+        <div class="col-md-6 col-lg-4 order-2 mb-4">
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
                       <h5 class="card-title m-0 me-2">Transactions</h5>
@@ -1003,9 +993,9 @@
                           <i class="bx bx-dots-vertical-rounded"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
-                          <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
+                          <a class="dropdown-item" href="">Last 28 Days</a>
+                          <a class="dropdown-item" href="">Last Month</a>
+                          <a class="dropdown-item" href="">Last Year</a>
                         </div>
                       </div>
                     </div>
@@ -1013,7 +1003,7 @@
                       <ul class="p-0 m-0">
                         <li class="d-flex mb-4 pb-1">
                           <div class="avatar flex-shrink-0 me-3">
-                            <img src={{ asset(Dashboard/assets/img/icons/unicons/paypal.png" alt="User" class="rounded" />
+                            <img src="{{ 'asset(Dashboard/assets/img/icons/unicons/paypal.png'}}" alt="User" class="rounded" />
                           </div>
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
@@ -1073,7 +1063,7 @@
                         </li>
                         <li class="d-flex mb-4 pb-1">
                           <div class="avatar flex-shrink-0 me-3">
-                            <img src={{ asset(Dashboard/assets/img/icons/unicons/wallet.png" alt="User" class="rounded" />
+                            <img src="{{ asset('Dashboard/assets/img/icons/unicons/wallet.png')}}" alt="User" class="rounded" />
                           </div>
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
@@ -1088,7 +1078,7 @@
                         </li>
                         <li class="d-flex">
                           <div class="avatar flex-shrink-0 me-3">
-                            <img src={{ asset(Dashboard/assets/img/icons/unicons/cc-warning.png" alt="User" class="rounded" />
+                            <img src="{{ asset('Dashboard/assets/img/icons/unicons/cc-warning.png') }}" alt="User" class="rounded" />
                           </div>
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
@@ -1166,9 +1156,9 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src={{ asset(Dashboard/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src={{ asset(Dashboard/assets/vendor/libs/popper/popper.js"></script>
-    <script src={{ asset(Dashboard/assets/vendor/js/bootstrap.js"></script>
+    <script src="{{ asset('Dashboard/assets/vendor/libs/jquery/jquery.js)'}} " ></script>
+    <script src="{{ asset('Dashboard/assets/vendor/libs/popper/popper.js'}}"></script>
+    <script src={{ asset('Dashboard/assets/vendor/js/bootstrap.js'}}"></script>
     <script src={{ asset(Dashboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
     <script src={{ asset(Dashboard/assets/vendor/js/menu.js"></script>
@@ -1178,10 +1168,10 @@
     <script src={{ asset(Dashboard/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
     <!-- Main JS -->
-    <script src={{ asset(Dashboard/assets/js/main.js"></script>
+    <script src={{ '(asset(Dashboard/assets/js/main.js')}}</script>
 
-    <!-- Page JS -->
-    <script src={{ asset(Dashboard/assets/js/dashboards-analytics.js"></script>
+
+    <script src="{{ asset('Dashboard/assets/js/dashboards-analytics.js')}}"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

@@ -22,21 +22,7 @@ class DonorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('email', EmailType::class, [
-                // Add constraints for email format and required field (optional)
-                'constraints' => [
-                    new Email(),
-                    new NotBlank(),
-                ],
-            ])
-            ->add('password', PasswordType::class, [
-                // Add constraints for password strength (optional)
-                'constraints' => [
-                    new Length(['min' => 8, 'max' => 255]),
-                    // Add other password strength constraints as needed
-                ],
-            ])
+        $builder->add('user',RegistrationFormType::class)
             ->add('lastname', TextType::class, [
                 // Add constraints for password strength (optional)
                 'constraints' => [
@@ -49,13 +35,7 @@ class DonorType extends AbstractType
                     new Length(['min' => 8, 'max' => 255]),
                     // Add other password strength constraints as needed
                 ],
-            ])->add('role', TextType::class, [
-        // Add constraints for password strength (optional)
-        'constraints' => [
-            new Length(['min' => 8, 'max' => 255]),
-            // Add other password strength constraints as needed
-        ],
-    ])->add('phone', TextType::class, [
+            ])->add('phone', TextType::class, [
                 // Add constraints for password strength (optional)
                 'constraints' => [
                     new Length(['min' => 8, 'max' => 255]),
