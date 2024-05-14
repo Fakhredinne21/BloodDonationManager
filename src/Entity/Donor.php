@@ -6,6 +6,7 @@ use App\Repository\DonorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 
 #[ORM\Entity(repositoryClass: DonorRepository::class)]
 class Donor extends Users
@@ -26,6 +27,11 @@ class Donor extends Users
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+    #[ORM\Column]
+    private ?bool $agree = null ;
+    #[ORM\Column(type: "string", length: 255)]
+    private ?string $Email = null;
+
 
     public function __construct()
     {
@@ -88,6 +94,29 @@ class Donor extends Users
     public function setUser(User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getAgree(): ?bool
+    {
+        return $this->agree;
+    }
+
+    public function setAgree(bool $agree): self
+    {
+        $this->agree = $agree;
+
+        return $this;
+    }
+    public function getEmail(): ?string
+    {
+        return $this->Email;
+    }
+
+    public function setEmail(string $Email): self
+    {
+        $this->Email = $Email;
 
         return $this;
     }

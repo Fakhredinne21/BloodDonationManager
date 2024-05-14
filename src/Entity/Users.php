@@ -22,6 +22,8 @@ abstract class Users
     #[ORM\Column(length: 60)]
     private ?string $first_name = null;
 
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $password = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $phone = null;
@@ -61,6 +63,17 @@ abstract class Users
     public function setPhone(string $phone): static
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
 
         return $this;
     }

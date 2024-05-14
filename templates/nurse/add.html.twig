@@ -1,16 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+{% extends 'base.html.twig' %}
 
-</head>
-<body>
+{% block body %}
+    <style>
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1em;
+        }
 
+        .flex-container label {
+            margin-right: 1em;
+        }
+    </style>
+    <section id="sign-up">
+        <div class="container">
+            <img src="imgs/logo.png" alt="">
+            {{ form_start(form) }}
+            <div class="form-group flex-container">
+                {{ form_label(form.firstname) }}
+                {{ form_widget(form.firstname) }}
+            </div>
+            <div class="form-group flex-container">
+                {{ form_label(form.lastname) }}
+                {{ form_widget(form.lastname) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.phone, 'Phone Number') }}
+                {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.phone) }}
+            </div>
+            <div class="form-group flex-container">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+            </div>
+            <div class="form-group flex-container">
+                {{ form_label(form.password) }}
+                {{ form_widget(form.password) }}
+            </div>
 
-{{form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+            <div class="mb-3">
+                {{ form_label(form.bloodType, 'Blood Type') }}
+                {{ form_widget(form.bloodType, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.bloodType) }}
+            </div>
 
-</body>
-</html>
+            <div class="form-group flex-container">
+                {{ form_label(form.agree) }}
+                {{ form_widget(form.agree) }}
+            </div>
+            <div class="form-group">
+                {{ form_widget(form.submit) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </section>
+{% endblock %}

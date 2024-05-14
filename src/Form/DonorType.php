@@ -2,58 +2,74 @@
 
 namespace App\Form;
 
-use App\Entity\BloodHoster;
 use App\Entity\Donor;
-use SebastianBergmann\CodeCoverage\Report\Text;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DonorType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('user',RegistrationFormType::class)
+        $builder
+            ->add('firstname', TextType::class, [
+                'constraints' => [
+                    new Length(['min' => 2, 'max' => 255]),
+                ],
+                'attr' => ['placeholder' => 'First Name', 'required' => true]
+            ])
             ->add('lastname', TextType::class, [
-                // Add constraints for password strength (optional)
+                'constraints' => [
+                    new Length(['min' => 2, 'max' => 255]),
+                ],
+                'attr' => ['placeholder' => 'Last Name', 'required' => true]
+            ])
+            ->add('email', EmailType::class, [
+                'constraints' => [
+                    new Length(['min' => 5, 'max' => 255]),
+                ],
+                'attr' => ['placeholder' => 'email', 'required' => true]
+            ])
+            ->add('password', PasswordType::class, [
                 'constraints' => [
                     new Length(['min' => 8, 'max' => 255]),
-                    // Add other password strength constraints as needed
                 ],
-            ]) ->add('firstname', TextType::class, [
-                // Add constraints for password strength (optional)
+                'attr' => ['placeholder' => 'Password', 'required' => true]
+            ])
+            ->add('agree', CheckboxType::class, [
+                'label' => 'Agree on terms and conditions',
+                'required' => true
+            ])
+            ->add('phone', TextType::class, [
                 'constraints' => [
-                    new Length(['min' => 8, 'max' => 255]),
-                    // Add other password strength constraints as needed
+                    new Length(['min' => 8]),
                 ],
-            ])->add('phone', TextType::class, [
-                // Add constraints for password strength (optional)
-                'constraints' => [
-                    new Length(['min' => 8, 'max' => 255]),
-                    // Add other password strength constraints as needed
-                ],
-            ]) ->add('BloodType', ChoiceType::class, [
+                'attr' => ['placeholder' => 'Phone Number', 'required' => true]
+            ])
+            ->add('bloodType', ChoiceType::class, [
                 'choices' => [
                     'A+' => 'A+',
                     'A-' => 'A-',
                     'B+' => 'B+',
                     'B-' => 'B-',
-                    'O+' => 'o+',
-                    'O-' => 'o-',
+                    'AB+' => 'AB+',
+                    'AB-' => 'AB-',
+                    'O+' => 'O+',
+                    'O-' => 'O-',
                 ],
-                'expanded' => false,  // Dropdown by default, set to true for radio buttons
+                'placeholder' => 'Choose your blood type',
+                'required' => true
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Sign Up',  // Customize submit button label
+                'label' => 'Sign Up',
+                'attr' => ['class' => 'submit', 'style' => 'background-color: rgb(51, 58, 65);']
             ]);
     }
 
