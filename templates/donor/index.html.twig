@@ -15,7 +15,7 @@
                 <p>
                     Date: {{ activity.date|date('Y-m-d') }}
                 </p>
-                <a href="{{ path('activity_edit', {'id': activity.id}) }}" class="btn btn-success">Participate</a>
+                <a href="{{ path('app_confirm_participation', {'idact': activity.id,'id':app.user.id}) }}" class="btn btn-success">Participate</a>
 
 
             </div>

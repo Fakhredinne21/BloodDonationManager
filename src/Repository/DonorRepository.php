@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+
 use App\Entity\Donor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,6 +17,12 @@ class DonorRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Donor::class);
 
+    }
+    public function updateDonor(Donor $donor): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($donor);
+        $em->flush();
     }
 
 //    /**

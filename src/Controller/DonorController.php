@@ -39,5 +39,19 @@ class DonorController extends AbstractController
         ]);
 
     }
+    #[Route('/donor/participation/confirmation{idact}/{id}', name: 'app_confirm_participation')]
+    public function confirm(int $idact,int $id): Response
+    {
+        $activity = $this->activityRepository->find($idact);
+        $donor = $this->donorRepository->find($id);
+        $donor->addParticipation($activity);
+        $activity->addDonor($donor);
+        $this->activityRepository->updateActivity($activity);
+        $this->donorRepository->updateDonor($donor);
+        return $this->render('donor/index.html.twig', ['activity'=>$activity,
+            'controller_name' => 'DonorController',
+        ]);
+
+    }
 
 }
