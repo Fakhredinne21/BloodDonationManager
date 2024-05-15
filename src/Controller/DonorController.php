@@ -49,9 +49,10 @@ class DonorController extends AbstractController
         $this->activityRepository->updateActivity($activity);
         $this->donorRepository->updateDonor($donor);
         return $this->render('donor/index.html.twig', ['activity'=>$activity,
-            'controller_name' => 'DonorController',
+            'controller_name' => 'DonorController','message'=>'Participation is Confirmed'
         ]);
 
     }
+
 
 }
