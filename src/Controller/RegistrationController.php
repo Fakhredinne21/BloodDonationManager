@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use AllowDynamicProperties;
+use App\Entity\Donor;
 use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Form\DonorType;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -12,34 +15,40 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-class RegistrationController extends AbstractController
+#[AllowDynamicProperties] class RegistrationController extends AbstractController
 {
+    public function __construct(EntityManagerInterface $entityManager)
+{
+    $this->entityManager=$entityManager;
+}
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
     {
-        $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+        $donor = new Donor();
 
+        $form = $this->createForm(DonorType::class, $donor);
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            $user = new User();
+            $user->setEmail($form->get('email')->getData());
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
+            $user->setRoles(['ROLE_DONOR']);
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $donor->setUser($user);
 
-            // do anything else you need here, like send an email
+            $this->entityManager->persist($user);
+            $this->entityManager->persist($donor);
+            $this->entityManager->flush();
 
-            return $security->login($user, 'form_login', 'main');
+            return $this->redirectToRoute('app_welcomepage');
         }
-
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
+        return $this->render('nurse/add.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

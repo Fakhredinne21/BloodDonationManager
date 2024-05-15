@@ -61,4 +61,5 @@ class NurseController extends AbstractController
         return $this->render('nurse/add.html.twig', [
             'form' => $form->createView(),
         ]);
-    }}
+    }
+}

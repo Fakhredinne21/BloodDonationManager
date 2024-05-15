@@ -11,7 +11,7 @@
     <!-- Articles Start -->
     <section id="articles">
         <div class="container">
-            <h2 style="display: inline-block;">Articles</h2>
+            <h2 style="display: inline-block;">Activities</h2>
             <div class="swiper-container">
                 <div class="button-area" style="display: inline-block; margin-left: 850px;">
                     <div class="swiper-button-next"></div>
@@ -19,6 +19,7 @@
                     </button>
                 </div>
                 <div class="swiper-wrapper">
+                    {% for activity in activities %}
                     <div class="swiper-slide">
                         <div class="card">
                             <div class="card-img-top" style="position: relative;">
@@ -26,75 +27,18 @@
                                 <button class="like"><i class="fas fa-heart icon-large"></i></button>
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title">Blood Types</h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
-                                    laborum
-                                    dolor minus quibusdam sequi asperiores? Fugiat aut consectetur laudantium ea sed
-                                    nihil
-                                    dolore, in mollitia blanditiis, rem omnis recusandae maiores?</p>
+                                <h4 class="card-title">{{ activity.nameActivity }}</h4>
+                                <p class="card-text">{{ activity.date|date('Y-m-d') }}
+                                    {{ activity.description }}
+
+                                </p>
                                 <div class="btn-cont">
                                     <button class="card-btn" onclick= "window.location.href = 'article.html';">Details</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <div class="card">
-                            <div class="card-img-top" style="position: relative;">
-                                <img src="{{ asset('UI/imgs/p4.jpg') }}" alt="Card image">
-                                <button class="like"><i class="fas fa-heart icon-large"></i></button>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Donations Benefits</h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
-                                    laborum
-                                    dolor minus quibusdam sequi asperiores? Fugiat aut consectetur laudantium ea sed
-                                    nihil
-                                    dolore, in mollitia blanditiis, rem omnis recusandae maiores?</p>
-                                <div class="btn-cont">
-                                    <button class="card-btn" onclick= "window.location.href = 'article.html';">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card ">
-                            <div class="card-img-top" style="position: relative;">
-                                <img src="{{ asset('UI/imgs/p1.jpg') }}" alt="Card image">
-                                <button class="like"><i class="fas fa-heart icon-large"></i></button>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">Disease Protection</h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
-                                    laborum
-                                    dolor minus quibusdam sequi asperiores? Fugiat aut consectetur laudantium ea sed
-                                    nihil
-                                    dolore, in mollitia blanditiis, rem omnis recusandae maiores?</p>
-                                <div class="btn-cont">
-                                    <button class="card-btn" onclick= "window.location.href = 'article.html';">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="card">
-                            <div class="card-img-top" style="position: relative;">
-                                <img src="{{ asset('UI/imgs/p5.jpg') }}" alt="Card image">
-                                <button class="like"><i class="fas fa-heart icon-large"></i></button>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">How To Donate?</h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
-                                    laborum
-                                    dolor minus quibusdam sequi asperiores? Fugiat aut consectetur laudantium ea sed
-                                    nihil
-                                    dolore, in mollitia blanditiis, rem omnis recusandae maiores?</p>
-                                <div class="btn-cont">
-                                    <button class="card-btn" onclick= "window.location.href = 'article.html';">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

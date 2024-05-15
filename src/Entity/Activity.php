@@ -20,6 +20,12 @@ class Activity
     #[ORM\Column]
     private ?bool $status = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $nameActivity = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +51,30 @@ class Activity
     public function setStatus(bool $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getNameActivity(): ?string
+    {
+        return $this->nameActivity;
+    }
+
+    public function setNameActivity(string $nameActivity): static
+    {
+        $this->nameActivity = $nameActivity;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }
