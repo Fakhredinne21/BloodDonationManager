@@ -51,7 +51,7 @@ class AdminController extends AbstractController
             $this->entityManager->persist($nurse);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('app_nurse');
+            return $this->redirectToRoute('app_admin');
         }
         return $this->render('admin/add_nurse.html.twig', [
             'form' => $form->createView(),

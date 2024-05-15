@@ -21,8 +21,8 @@ class NurseController extends AbstractController
 
     public function __construct(DonorRepository $donorRepo, EntityManagerInterface $entityManager)
     {
-        $donorRepository=$donorRepo;
-        $this->entityManager=$entityManager;
+        $donorRepository = $donorRepo;
+        $this->entityManager = $entityManager;
 
     }
 
@@ -33,6 +33,7 @@ class NurseController extends AbstractController
             'controller_name' => 'NurseController',
         ]);
     }
+
     #[Route('/adddonor', name: 'app_adddonor')]
     public function addDonor(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
@@ -63,8 +64,4 @@ class NurseController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes

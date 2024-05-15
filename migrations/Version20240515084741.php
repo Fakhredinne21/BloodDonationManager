@@ -10,11 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-<<<<<<<< Updated upstream:migrations/Version20240514033447.php
-final class Version20240514033447 extends AbstractMigration
-========
-final class Version20240514225139 extends AbstractMigration
->>>>>>>> Stashed changes:migrations/Version20240514225139.php
+final class Version20240515084741 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,7 +20,7 @@ final class Version20240514225139 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE activity (id INT AUTO_INCREMENT NOT NULL, date DATE NOT NULL, status TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE activity (id INT AUTO_INCREMENT NOT NULL, date DATE NOT NULL, status TINYINT(1) NOT NULL, name_activity VARCHAR(255) NOT NULL, description VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE `admin` (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, last_name VARCHAR(60) NOT NULL, first_name VARCHAR(60) NOT NULL, password VARCHAR(255) NOT NULL, phone NUMERIC(10, 2) NOT NULL, email VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_880E0D76A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE adminbyplace (id INT AUTO_INCREMENT NOT NULL, last_name VARCHAR(60) NOT NULL, first_name VARCHAR(60) NOT NULL, password VARCHAR(255) NOT NULL, phone NUMERIC(10, 2) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE blood (id INT AUTO_INCREMENT NOT NULL, quantity_blood INT NOT NULL, number_donors VARCHAR(60) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

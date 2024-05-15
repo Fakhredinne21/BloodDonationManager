@@ -5,10 +5,7 @@ use App\Entity\Admin;
 use App\Entity\Donor;
 use App\Entity\Nurse;
 
-<<<<<<< Updated upstream
 use App\Repository\ActivityRepository;
-=======
->>>>>>> Stashed changes
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class WelcomepageController extends AbstractController
 {
-<<<<<<< Updated upstream
+
     private ActivityRepository $activityRepository;
     private EntityManagerInterface $entityManager;
 
@@ -25,27 +22,24 @@ class WelcomepageController extends AbstractController
     {
         $this->activityRepository = $activityRepository;
         $this->entityManager = $entityManager;
-
     }
+//    #[Route('/', name: 'app_welcomepage')]
+//    public function index(): Response
+//    {
+//        $activities = $this->activityRepository->findAllActivities();
+//        return $this->render('welcomepage/index.html.twig', [
+//            'activities' => $activities,
+//        ]);
+//
+//
+//    }
+
+
+
     #[Route('/', name: 'app_welcomepage')]
     public function index(): Response
     {
         $activities = $this->activityRepository->findAllActivities();
-        return $this->render('welcomepage/index.html.twig', [
-            'activities' => $activities,
-        ]);
-
-=======
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
-    #[Route('/', name: 'app_welcomepage')]
-    public function index(): Response
-    {
         // Get the currently authenticated user
         $user = $this->getUser();
 
@@ -79,15 +73,16 @@ class WelcomepageController extends AbstractController
             return $this->render('welcomepage/index.html.twig', [
                 'controller_name' => 'WelcomepageController',
                 'user' => $sameIdUser,
+                'activities' => $activities,
             ]);
         } else {
             // The user is not authenticated
             // Render the template without passing the user
             return $this->render('welcomepage/index.html.twig', [
                 'controller_name' => 'WelcomepageController',
+                'activities' => $activities,
             ]);
         }
->>>>>>> Stashed changes
     }
 
 }
