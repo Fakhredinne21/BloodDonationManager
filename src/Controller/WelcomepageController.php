@@ -70,7 +70,7 @@ class WelcomepageController extends AbstractController
             }
 
             // Pass the user object to the template
-            return $this->render('welcomepage/index.html.twig', [
+            return $this->render('base.html.twig', [
                 'controller_name' => 'WelcomepageController',
                 'user' => $sameIdUser,
                 'activities' => $activities,
