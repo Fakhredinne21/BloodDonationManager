@@ -28,30 +28,33 @@ class AdminController extends AbstractController
         ]);
     }
     #[Route('/admin/add-nurse', name: 'app_admin_add_nurse')]
-public function addNurse(Request $request, UserPasswordHasherInterface $passwordEncoder): Response
-{
-    $nurse = new Nurse();
-    $user = new User();
+    public function addNurse(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $nurse = new Nurse();
 
-    $form = $this->createForm(NurseType::class, $nurse);
+        $form = $this->createForm(NurseType::class, $nurse);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = new User();
+            $user->setEmail($form->get('email')->getData());
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+            $user->setRoles(['ROLE_NURSE']);
 
-    $form->handleRequest($request);
+            $nurse->setUser($user);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Set the corresponding values for the User entity
-        $user->setEmail($nurse->getEmail());
-        $user->setPassword($passwordEncoder->hashPassword($user, $form->get('password')->getData()));
-        $user->setRoles(['ROLE_NURSE']); // set the role for the user
+            $this->entityManager->persist($user);
+            $this->entityManager->persist($nurse);
+            $this->entityManager->flush();
 
-        $this->entityManager->persist($nurse);
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return $this->redirectToRoute('app_admin');
+            return $this->redirectToRoute('app_nurse');
+        }
+        return $this->render('admin/add_nurse.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
-
-    return $this->render('admin/add_nurse.html.twig', [
-        'form' => $form->createView(),
-    ]);
-}
 }

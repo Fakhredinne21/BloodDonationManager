@@ -13,9 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
-
+#[Route('/nurse')]
 class NurseController extends AbstractController
-{ private EntityManagerInterface $entityManager;
+{
+    private EntityManagerInterface $entityManager;
     private DonorRepository $donorRepository;
 
     public function __construct(DonorRepository $donorRepo, EntityManagerInterface $entityManager)
@@ -25,14 +26,14 @@ class NurseController extends AbstractController
 
     }
 
-    #[Route('/nurse', name: 'app_nurse')]
+    #[Route('/', name: 'app_nurse')]
     public function index(): Response
     {
         return $this->render('nurse/index.html.twig', [
             'controller_name' => 'NurseController',
         ]);
     }
-    #[Route('/nurse/adddonor', name: 'app_adddonor')]
+    #[Route('/adddonor', name: 'app_adddonor')]
     public function addDonor(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $donor = new Donor();
@@ -62,4 +63,8 @@ class NurseController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

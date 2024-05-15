@@ -7,7 +7,13 @@
 <section id="login">
 
     <div class="container">
-        <img src="{{ asset('UI/imgs/logo.png') }}" alt="">
+
+        <div>
+            <img src="{{ asset('UI/imgs/blood-donation-svgrepo-com.svg') }}" width="5%" style="display: inline-block;">
+            <h1 style="display: inline-block;">Log in!</h1>
+        </div>
+
+
     <form method="post">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

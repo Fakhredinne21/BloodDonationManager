@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+
+
 use App\Repository\DonorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,6 +29,7 @@ class Donor extends Users
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
     #[ORM\Column]
     private ?bool $agree = null ;
     #[ORM\Column(type: "string", length: 255)]

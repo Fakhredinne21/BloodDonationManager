@@ -37,7 +37,11 @@ security:
     access_control:
          - { path: '^/profile',roles: PUBLIC_ACCESS }
          - { path: '^/admin', roles: ROLE_ADMIN }
+<<<<<<< Updated upstream
          -   { path: '^/nurse', roles: ROLE_NURSE }
+=======
+         - { path: '^/nurse', roles: ROLE_NURSE }
+>>>>>>> Stashed changes
          - { path: '^/donor', roles: ROLE_DONOR }
 
 
