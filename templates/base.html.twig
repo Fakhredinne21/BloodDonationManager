@@ -56,10 +56,14 @@
 {#            {{ dump(app.user) }}#}
             {% if app.user %}
                 <p style="font-size: 1.2em; color: #4a4a4a;">Welcome, <span style="font-weight: bold;">{{ app.user.email }}</span>!</p>
-                <p style="font-size: 1.1em; color: #4a4a4a;">You are logged in as a
-                    <span style="font-weight: bold;">
-            {% if is_granted('ROLE_ADMIN') %}Admin{% elseif is_granted('ROLE_NURSE') %}Nurse{% elseif is_granted('ROLE_DONOR') %}Donor{% endif %}</span>.
-                </p>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <p style="font-size: 1.1em; color: #4a4a4a;">You are logged in as a
+                        {% if is_granted('ROLE_ADMIN') %}Admin{% elseif is_granted('ROLE_NURSE') %}Nurse{% elseif is_granted('ROLE_DONOR') %}Donor{% endif %}</span>.
+                    </p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <button class="btn logout" style="background-color: #f44336; color: white;" onclick= "window.location.href = '{{ path('app_logout') }}';">Logout</button>
             {% else %}
                 <button class="btn signup" style="background-color: white; color: red;" onclick= "window.location.href = 'signup.html';">New Account</button>
