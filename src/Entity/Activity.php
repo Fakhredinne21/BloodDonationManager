@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ActivityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,17 @@ class Activity
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
+
+    /**
+     * @var Collection<int, Donor>
+     */
+    #[ORM\ManyToMany(targetEntity: Donor::class, inversedBy: 'participations')]
+    private Collection $donors;
+
+    public function __construct()
+    {
+        $this->donors = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,30 @@ class Activity
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Donor>
+     */
+    public function getDonors(): Collection
+    {
+        return $this->donors;
+    }
+
+    public function addDonor(Donor $donor): static
+    {
+        if (!$this->donors->contains($donor)) {
+            $this->donors->add($donor);
+        }
+
+        return $this;
+    }
+
+    public function removeDonor(Donor $donor): static
+    {
+        $this->donors->removeElement($donor);
 
         return $this;
     }

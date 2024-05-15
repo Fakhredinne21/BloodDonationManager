@@ -35,10 +35,16 @@ class Donor extends Users
     #[ORM\Column(type: "string", length: 255)]
     private ?string $Email = null;
 
+    /**
+     * @var Collection<int, Activity>
+     */
+    #[ORM\ManyToMany(targetEntity: Activity::class, mappedBy: 'donors')]
+    private Collection $participations;
 
     public function __construct()
     {
         $this->id = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
     public function getState(): ?int
@@ -120,6 +126,33 @@ class Donor extends Users
     public function setEmail(string $Email): self
     {
         $this->Email = $Email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Activity>
+     */
+    public function getParticipations(): Collection
+    {
+        return $this->participations;
+    }
+
+    public function addParticipation(Activity $participation): static
+    {
+        if (!$this->participations->contains($participation)) {
+            $this->participations->add($participation);
+            $participation->addDonor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipation(Activity $participation): static
+    {
+        if ($this->participations->removeElement($participation)) {
+            $participation->removeDonor($this);
+        }
 
         return $this;
     }

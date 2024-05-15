@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request; // Add this line
 
-
+#[Route('/admin')]
 class ActivityController extends AbstractController
 {
     private ActivityRepository $activityRepository;
@@ -86,5 +86,6 @@ class ActivityController extends AbstractController
         return $this->render('activity/edit_form.html.twig', [
             'activity' => $activity,
         ]);
+
     }
 }

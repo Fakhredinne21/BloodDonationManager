@@ -55,7 +55,7 @@
 
 {#            {{ dump(app.user) }}#}
             {% if app.user %}
-                <p style="font-size: 1.2em; color: #4a4a4a;">Welcome, <span style="font-weight: bold;">{{ app.user.email }}</span>!</p>
+                <p style="font-size: 1.2em; color: #4a4a4a;">Welcome, <span style="font-weight: bold;">{{ app.user.email }}</span></p>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <p style="font-size: 1.1em; color: #4a4a4a;">You are logged in as a
                         {% if is_granted('ROLE_ADMIN') %}Admin{% elseif is_granted('ROLE_NURSE') %}Nurse{% elseif is_granted('ROLE_DONOR') %}Donor{% endif %}</span>.

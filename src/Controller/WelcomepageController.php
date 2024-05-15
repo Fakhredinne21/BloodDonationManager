@@ -1,39 +1,39 @@
 <?php
 
 namespace App\Controller;
+use AllowDynamicProperties;
 use App\Entity\Admin;
 use App\Entity\Donor;
 use App\Entity\Nurse;
-
+use http\Env\Request;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Notifier\Notification\Notification;
 use App\Repository\ActivityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Notifier\NotifierInterface;
 
-
-class WelcomepageController extends AbstractController
+#[AllowDynamicProperties] class WelcomepageController extends AbstractController
 {
+
 
     private ActivityRepository $activityRepository;
     private EntityManagerInterface $entityManager;
 
-    public function __construct(ActivityRepository $activityRepository , EntityManagerInterface $entityManager)
+    public function __construct(ActivityRepository $activityRepository , EntityManagerInterface $entityManager,NotifierInterface $notifier)
     {
         $this->activityRepository = $activityRepository;
         $this->entityManager = $entityManager;
+        $this->notifier = $notifier;
     }
-//    #[Route('/', name: 'app_welcomepage')]
-//    public function index(): Response
-//    {
-//        $activities = $this->activityRepository->findAllActivities();
-//        return $this->render('welcomepage/index.html.twig', [
-//            'activities' => $activities,
-//        ]);
-//
-//
-//    }
+    #[Route('/push', name: 'app_welcomepage')]
+    public function push(Request $request)
+    {
 
+
+    }
 
 
     #[Route('/', name: 'app_welcomepage')]
@@ -42,12 +42,16 @@ class WelcomepageController extends AbstractController
         $activities = $this->activityRepository->findAllActivities();
         // Get the currently authenticated user
         $user = $this->getUser();
+        $notification = (new Notification('Important Update'))
+            ->content('A new feature has been released!')
+            ->channels(['email', 'sms']);
 
         // Check if the user is authenticated
         if ($user) {
             // The user is authenticated
             $roles = $user->getRoles();
             $userId = $user->getId();
+
 
             if (in_array('ROLE_ADMIN', $roles)) {
                 // Fetch the corresponding admin user with the same user_id
