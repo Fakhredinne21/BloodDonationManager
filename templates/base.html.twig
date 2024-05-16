@@ -39,31 +39,53 @@
                 {% endif %}
                 {% if is_granted('ROLE_NURSE') %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_nurse') }}">Nurse Dashboard</a>
+                        <a class="nav-link" href="{{ path('app_welcomepage') }}">Nurse Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_adddonor') }}">Add Donor</a>
                     </li>
+                    {% block activity %}
+                        {% if activities is defined and activities is not empty %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Activities
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% for activity in activities %}
+                                    <a class="dropdown-item" href="{{ path('activity_show', {'id': activity.id}) }}">{{ activity.description }}</a>
+                                {% else %}
+                                    <a class="dropdown-item" href="#">No activities</a>
+                                {% endfor %}
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% endblock activity %}
                 {% endif %}
                 {% if is_granted('ROLE_DONOR') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_welcomepage') }}">Donor Dashboard</a>
                     </li>
                 {% endif %}
-                <!-- Add more links for other roles as needed -->
+                {% if is_granted('ROLE_ADMINBYPLACE') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_adminbyplace') }}">Admin By Place Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_activity') }}">New Activity</a>
+                    </li>
+                {% endif %}
             </ul>
-
-{#            {{ dump(app.user) }}#}
+            {{ dump(app.user) }}
             {% if app.user %}
                 <p style="font-size: 1.2em; color: #4a4a4a;">Welcome, <span style="font-weight: bold;">{{ app.user.email }}</span></p>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <p style="font-size: 1.1em; color: #4a4a4a;">You are logged in as a
-                        {% if is_granted('ROLE_ADMIN') %}Admin{% elseif is_granted('ROLE_NURSE') %}Nurse{% elseif is_granted('ROLE_DONOR') %}Donor{% endif %}</span>.
-                    </p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+{#                <div class="alert alert-success alert-dismissible fade show" role="alert">#}
+{#                    <p style="font-size: 1.1em; color: #4a4a4a;">You are logged in as a#}
+{#                        <span> {% if is_granted('ROLE_ADMIN') %}Admin{% elseif is_granted('ROLE_NURSE') %}Nurse{% elseif is_granted('ROLE_DONOR') %}Donor{% endif %}</span>.#}
+{#                    </p>#}
+{#                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+{#                        <span aria-hidden="true">&times;</span>#}
+{#                    </button>#}
+{#                </div>#}
                 <button class="btn logout" style="background-color: #f44336; color: white;" onclick= "window.location.href = '{{ path('app_logout') }}';">Logout</button>
             {% else %}
                 <button class="btn signup" style="background-color: white; color: red;" onclick= "window.location.href = 'signup.html';">New Account</button>
@@ -76,9 +98,8 @@
 {% endblock header %}
 
 {% block body %}
-
-{% endblock body %}
-
+    {% include 'welcomepage/index.html.twig' %}
+{% endblock %}
 
 {% block footer %}
 <!-- Footer Start -->

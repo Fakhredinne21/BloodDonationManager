@@ -35,11 +35,11 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: '^/profile',roles: PUBLIC_ACCESS }
-         - { path: '^/admin', roles: ROLE_ADMIN }
-         - { path: '^/nurse', roles: ROLE_NURSE }
-         - { path: '^/donor', roles: ROLE_DONOR }
-
+#         - { path: '^/profile',roles: PUBLIC_ACCESS }
+#         - { path: '^/admin', roles: ROLE_ADMIN }
+#         - { path: '^/nurse', roles: ROLE_NURSE }
+#         - { path: '^/donor', roles: ROLE_DONOR }
+#         - { path: '^/adminbp',roles: ROLE_ADMINBYPLACE }
 
 when@test:
     security:

@@ -30,6 +30,23 @@ class ActivityController extends AbstractController
         ]);
     }
 
+    #[Route('/activity/show/{id}', name: 'activity_show')]
+    public function showActivity(int $id): Response
+    {
+        $activity = $this->entityManager->getRepository(Activity::class)->find($id);
+
+        if (!$activity) {
+            throw $this->createNotFoundException('The activity does not exist');
+        }
+
+        $donors = $activity->getDonors();
+
+        return $this->render('activity/show.html.twig', [
+            'activity' => $activity,
+            'donors' => $donors,
+        ]);
+    }
+
     #[Route('/activity/showallactivities', name: 'app_showallactivities')]
     public function showallactivites(): Response
     {

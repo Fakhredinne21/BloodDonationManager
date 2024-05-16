@@ -1,0 +1,22 @@
+{# templates/activity/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}New Activity{% endblock %}
+
+{% block body %}
+    <h1>Create new Activity</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.date, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.status, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.nameActivity, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.nurses, {'attr': {'class': 'form-control'}}) }}
+
+
+    <button class="btn btn-primary">Save</button>
+
+    {{ form_end(form) }}
+{% endblock %}

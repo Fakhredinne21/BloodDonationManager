@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block activity %}
+{% endblock activity %}
+{% block body %}
+
+    <p>{{ activity.description }}</p>
+    <p>{{ activity.date|date('Y-m-d') }}</p>
+    <p>Status: {{ activity.status }}</p>
+
+    <h2>Donors</h2>
+    {% for donor in donors %}
+        <div>
+            <p>{{ donor.name }}</p>
+            <p>{{ donor.email }}</p>
+        </div>
+    {% else %}
+        <p>No donors found.</p>
+    {% endfor %}
+{% endblock %}

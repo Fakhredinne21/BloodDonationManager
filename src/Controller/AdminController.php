@@ -45,9 +45,14 @@ class AdminController extends AbstractController
             );
             $user->setRoles(['ROLE_NURSE']);
 
+            // Persist and flush the User entity first so it gets an ID
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            // Now that the User entity has an ID, you can set it in the Nurse entity
             $nurse->setUser($user);
 
-            $this->entityManager->persist($user);
+            // Persist and flush the Nurse entity
             $this->entityManager->persist($nurse);
             $this->entityManager->flush();
 

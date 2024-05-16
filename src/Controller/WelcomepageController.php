@@ -15,7 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Notifier\NotifierInterface;
 
-#[AllowDynamicProperties] class WelcomepageController extends AbstractController
+#[AllowDynamicProperties]
+
+class WelcomepageController extends AbstractController
 {
 
 
@@ -28,7 +30,7 @@ use Symfony\Component\Notifier\NotifierInterface;
         $this->entityManager = $entityManager;
         $this->notifier = $notifier;
     }
-    #[Route('/push', name: 'app_welcomepage')]
+    #[Route('/push', name: 'app_push')]
     public function push(Request $request)
     {
 
@@ -40,7 +42,6 @@ use Symfony\Component\Notifier\NotifierInterface;
     public function index(): Response
     {
         $activities = $this->activityRepository->findAllActivities();
-        // Get the currently authenticated user
         $user = $this->getUser();
         $notification = (new Notification('Important Update'))
             ->content('A new feature has been released!')
@@ -55,12 +56,21 @@ use Symfony\Component\Notifier\NotifierInterface;
 
             if (in_array('ROLE_ADMIN', $roles)) {
                 // Fetch the corresponding admin user with the same user_id
+
                 $adminRepository = $this->entityManager->getRepository(Admin::class);
                 $sameIdUser = $adminRepository->findOneBy(['user' => $userId]);
             } elseif (in_array('ROLE_NURSE', $roles)) {
                 // Fetch the corresponding nurse user with the same user_id
                 $nurseRepository = $this->entityManager->getRepository(Nurse::class);
                 $sameIdUser = $nurseRepository->findOneBy(['user' => $userId]);
+
+                // Fetch the activities linked to the nurse
+                $activities = [];
+                if ($sameIdUser) {
+                    $activities = $sameIdUser->getActivities();
+                }
+                // Fetch the corresponding nurse user with the same user_id
+
             } elseif (in_array('ROLE_DONOR', $roles)) {
                 // Fetch the corresponding donor user with the same user_id
                 $donorRepository = $this->entityManager->getRepository(Donor::class);
@@ -68,7 +78,7 @@ use Symfony\Component\Notifier\NotifierInterface;
             } else {
                 // The user does not have the required role
                 // Render the template without passing the user
-                return $this->render('welcomepage/index.html.twig', [
+                return $this->render('base.html.twig', [
                     'controller_name' => 'WelcomepageController',
                 ]);
             }
@@ -82,7 +92,7 @@ use Symfony\Component\Notifier\NotifierInterface;
         } else {
             // The user is not authenticated
             // Render the template without passing the user
-            return $this->render('welcomepage/index.html.twig', [
+            return $this->render('base.html.twig', [
                 'controller_name' => 'WelcomepageController',
                 'activities' => $activities,
             ]);

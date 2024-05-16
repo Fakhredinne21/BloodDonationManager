@@ -28,6 +28,7 @@ abstract class Users
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $phone = null;
 
+
     public function getId(): ?int
     {
         return $this->id;

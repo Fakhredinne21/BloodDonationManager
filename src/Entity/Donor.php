@@ -41,6 +41,9 @@ class Donor extends Users
     #[ORM\ManyToMany(targetEntity: Activity::class, mappedBy: 'donors')]
     private Collection $participations;
 
+    #[ORM\ManyToOne(inversedBy: 'donor')]
+    private ?Participation $participation = null;
+
     public function __construct()
     {
         $this->id = new ArrayCollection();
@@ -153,6 +156,18 @@ class Donor extends Users
         if ($this->participations->removeElement($participation)) {
             $participation->removeDonor($this);
         }
+
+        return $this;
+    }
+
+    public function getParticipation(): ?Participation
+    {
+        return $this->participation;
+    }
+
+    public function setParticipation(?Participation $participation): static
+    {
+        $this->participation = $participation;
 
         return $this;
     }

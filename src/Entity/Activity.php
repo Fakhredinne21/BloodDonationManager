@@ -34,9 +34,29 @@ class Activity
     #[ORM\ManyToMany(targetEntity: Donor::class, inversedBy: 'participations')]
     private Collection $donors;
 
+    /**
+     * @var Collection<int, Nurse>
+     */
+    #[ORM\ManyToMany(targetEntity: Nurse::class, inversedBy: 'activities')]
+    private Collection $nurses;
+
+    #[ORM\ManyToOne(inversedBy: 'activities')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Adminbyplace $adminbyplace = null;
+
+    /**
+     * @var Collection<int, Participation>
+     */
+    #[ORM\OneToMany(targetEntity: Participation::class, mappedBy: 'activities')]
+    private Collection $participations;
+
+
+
     public function __construct()
     {
         $this->donors = new ArrayCollection();
+        $this->nurses = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +132,72 @@ class Activity
     public function removeDonor(Donor $donor): static
     {
         $this->donors->removeElement($donor);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Nurse>
+     */
+    public function getNurses(): Collection
+    {
+        return $this->nurses;
+    }
+
+    public function addNurse(Nurse $nurse): static
+    {
+        if (!$this->nurses->contains($nurse)) {
+            $this->nurses->add($nurse);
+        }
+
+        return $this;
+    }
+
+    public function removeNurse(Nurse $nurse): static
+    {
+        $this->nurses->removeElement($nurse);
+
+        return $this;
+    }
+
+    public function getAdminbyplace(): ?Adminbyplace
+    {
+        return $this->adminbyplace;
+    }
+
+    public function setAdminbyplace(Adminbyplace $adminbyplace): static
+    {
+        $this->adminbyplace = $adminbyplace;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipations(): Collection
+    {
+        return $this->participations;
+    }
+
+    public function addParticipation(Participation $participation): static
+    {
+        if (!$this->participations->contains($participation)) {
+            $this->participations->add($participation);
+            $participation->setActivities($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipation(Participation $participation): static
+    {
+        if ($this->participations->removeElement($participation)) {
+            // set the owning side to null (unless already changed)
+            if ($participation->getActivities() === $this) {
+                $participation->setActivities(null);
+            }
+        }
 
         return $this;
     }

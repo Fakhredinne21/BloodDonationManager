@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Donor;
+use App\Entity\Nurse;
 use App\Entity\User;
 use App\Form\DonorType;
 use App\Repository\DonorRepository;
@@ -29,8 +30,17 @@ class NurseController extends AbstractController
     #[Route('/', name: 'app_nurse')]
     public function index(): Response
     {
+        $loggedInUser = $this->getUser();
+
+        $nurse = $this->entityManager->getRepository(Nurse::class)->findOneBy(['user' => $loggedInUser]);
+
+        $activities = [];
+        if ($nurse) {
+            $activities = $nurse->getActivities();
+        }
+
         return $this->render('nurse/index.html.twig', [
-            'controller_name' => 'NurseController',
+            'activities' => $activities,
         ]);
     }
 
@@ -61,6 +71,30 @@ class NurseController extends AbstractController
             return $this->redirectToRoute('app_nurse');
         }
         return $this->render('nurse/add.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/approve', name: 'app_nurse_approve')]
+    public function approve(Request $request): Response
+    {
+        $form = $this->createForm(ApprovalType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $participations = $data['participations'];
+            $approved = $data['approved'];
+
+            foreach ($participations as $participation) {
+                $participation->setApproved($approved);
+                $this->getDoctrine()->getManager()->flush();
+            }
+
+            return $this->redirectToRoute('approve');
+        }
+
+        return $this->render('nurse/approve.html.twig', [
             'form' => $form->createView(),
         ]);
     }
