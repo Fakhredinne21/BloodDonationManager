@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Entity\Participation;
 use App\Repository\ActivityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +26,7 @@ class ActivityController extends AbstractController
     #[Route('/activity', name: 'app_activity')]
     public function index(): Response
     {
-        return $this->render('activity/index.html.twig.twig', [
+        return $this->render('activity/index.html.twig', [
             'controller_name' => 'ActivityController',
         ]);
     }
@@ -34,7 +35,7 @@ class ActivityController extends AbstractController
     public function showActivity(int $id): Response
     {
         $activity = $this->entityManager->getRepository(Activity::class)->find($id);
-
+        $participations = $this->entityManager->getRepository(Participation::class)->findAll();
         if (!$activity) {
             throw $this->createNotFoundException('The activity does not exist');
         }
@@ -44,6 +45,7 @@ class ActivityController extends AbstractController
         return $this->render('activity/show.html.twig', [
             'activity' => $activity,
             'donors' => $donors,
+            'participations' => $participations,
         ]);
     }
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Donor;
 use App\Entity\Nurse;
+use App\Entity\Participation;
 use App\Entity\User;
 use App\Form\DonorType;
 use App\Repository\DonorRepository;
@@ -68,34 +69,47 @@ class NurseController extends AbstractController
             $this->entityManager->persist($donor);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('app_nurse');
+            return $this->redirectToRoute('app_welcomepage');
         }
         return $this->render('nurse/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/approve', name: 'app_nurse_approve')]
-    public function approve(Request $request): Response
+    #[Route('/participation/approve/{id}', name: 'approve_participation', methods: ['POST'])]
+    public function approve(int $id): Response
     {
-        $form = $this->createForm(ApprovalType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $participations = $data['participations'];
-            $approved = $data['approved'];
-
-            foreach ($participations as $participation) {
-                $participation->setApproved($approved);
-                $this->getDoctrine()->getManager()->flush();
-            }
-
-            return $this->redirectToRoute('approve');
+        $participation = $this->entityManager->getRepository(Participation::class)->find($id);
+        if ($participation) {
+            $participation->setConfirmedByNurse(true);
+            $this->entityManager->persist($participation);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('activity_show', ['id' => $participation->getActivity()->getId()]);
         }
 
-        return $this->render('nurse/approve.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        throw $this->createNotFoundException('The participation does not exist');
     }
+//    #[Route('/approve', name: 'app_nurse_approve')]
+//    public function approve(Request $request): Response
+//    {
+//        $form = $this->createForm(ApprovalType::class);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $data = $form->getData();
+//            $participations = $data['participations'];
+//            $approved = $data['approved'];
+//
+//            foreach ($participations as $participation) {
+//                $participation->setApproved($approved);
+//                $this->getDoctrine()->getManager()->flush();
+//            }
+//
+//            return $this->redirectToRoute('approve');
+//        }
+//
+//        return $this->render('nurse/approve.html.twig', [
+//            'form' => $form->createView(),
+//        ]);
+//    }
 }

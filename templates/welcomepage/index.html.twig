@@ -16,6 +16,8 @@
                     </button>
                 </div>
                 <div class="swiper-wrapper">
+                    {%block activity%}
+                    {% if activities %}
                     {% for activity in activities %}
                     <div class="swiper-slide">
                         <div class="card">
@@ -36,6 +38,8 @@
                         </div>
                     </div>
                     {% endfor %}
+                    {% endif %}
+                    {% endblock activity%}
                 </div>
             </div>
         </div>

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block activityadminbyplace %}
+{% endblock activityadminbyplace %}
+{% block body %}
+
+    <h1>Donors who participated in activities</h1>
+
+    {% if donors is not empty %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Blood Type</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for donor in donors %}
+                <tr>
+                    <td>{{ donor.getFirstName() }}</td>
+                    <td>{{ donor.getLastName() }}</td>
+                    <td>{{ donor.email }}</td>
+                    <td>{{ donor.getBloodType() }}</td>
+                    <td>
+                        <a href="{{ path('donor_validate', {'id': donor.participation.id}) }}" class="btn btn-success">Validate</a>
+                        <a href="{{ path('donor_invalidate', {'id': donor.participation.id}) }}" class="btn btn-danger">Invalidate</a>
+                    </td>
+                    <td></td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No donors found.</p>
+    {% endif %}
+{% endblock %}

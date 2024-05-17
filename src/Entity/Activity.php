@@ -50,6 +50,12 @@ class Activity
     #[ORM\OneToMany(targetEntity: Participation::class, mappedBy: 'activities')]
     private Collection $participations;
 
+    /**
+     * @var Collection<int, Participation>
+     */
+    #[ORM\OneToMany(targetEntity: Participation::class, mappedBy: 'activity')]
+    private Collection $participationsActivity;
+
 
 
     public function __construct()
@@ -57,6 +63,7 @@ class Activity
         $this->donors = new ArrayCollection();
         $this->nurses = new ArrayCollection();
         $this->participations = new ArrayCollection();
+        $this->participationsActivity = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,7 +191,7 @@ class Activity
     {
         if (!$this->participations->contains($participation)) {
             $this->participations->add($participation);
-            $participation->setActivities($this);
+            $participation->setActivity($this);
         }
 
         return $this;
@@ -196,6 +203,36 @@ class Activity
             // set the owning side to null (unless already changed)
             if ($participation->getActivities() === $this) {
                 $participation->setActivities(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipationsActivity(): Collection
+    {
+        return $this->participationsActivity;
+    }
+
+    public function addParticipationsActivity(Participation $participationsActivity): static
+    {
+        if (!$this->participationsActivity->contains($participationsActivity)) {
+            $this->participationsActivity->add($participationsActivity);
+            $participationsActivity->setActivity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipationsActivity(Participation $participationsActivity): static
+    {
+        if ($this->participationsActivity->removeElement($participationsActivity)) {
+            // set the owning side to null (unless already changed)
+            if ($participationsActivity->getActivity() === $this) {
+                $participationsActivity->setActivity(null);
             }
         }
 

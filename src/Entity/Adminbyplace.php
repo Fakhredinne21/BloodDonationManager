@@ -20,6 +20,12 @@ class Adminbyplace extends Users
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    /**
+     * @var Collection<int, Participation>
+     */
+    #[ORM\OneToMany(targetEntity: Participation::class, mappedBy: 'adminByPlace')]
+    private Collection $participationsAdminByPlace;
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -33,6 +39,7 @@ class Adminbyplace extends Users
     public function __construct()
     {
         $this->activities = new ArrayCollection();
+        $this->participationsAdminByPlace = new ArrayCollection();
     }
 
     /**
@@ -59,6 +66,36 @@ class Adminbyplace extends Users
             // set the owning side to null (unless already changed)
             if ($activity->getAdminbyplace() === $this) {
                 $activity->setAdminbyplace(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipationsAdminByPlace(): Collection
+    {
+        return $this->participationsAdminByPlace;
+    }
+
+    public function addParticipationsAdminByPlace(Participation $participationsAdminByPlace): static
+    {
+        if (!$this->participationsAdminByPlace->contains($participationsAdminByPlace)) {
+            $this->participationsAdminByPlace->add($participationsAdminByPlace);
+            $participationsAdminByPlace->setAdminByPlace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipationsAdminByPlace(Participation $participationsAdminByPlace): static
+    {
+        if ($this->participationsAdminByPlace->removeElement($participationsAdminByPlace)) {
+            // set the owning side to null (unless already changed)
+            if ($participationsAdminByPlace->getAdminByPlace() === $this) {
+                $participationsAdminByPlace->setAdminByPlace(null);
             }
         }
 

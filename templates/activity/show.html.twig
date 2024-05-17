@@ -10,8 +10,12 @@
     <h2>Donors</h2>
     {% for donor in donors %}
         <div>
-            <p>{{ donor.name }}</p>
+
+            <p>{{ donor.getFirstName() }}</p>
             <p>{{ donor.email }}</p>
+            <form method="post" action="{{ path('approve_participation', {'id': donor.participation.id}) }}">
+                <input type="submit" value="Approve">
+            </form>
         </div>
     {% else %}
         <p>No donors found.</p>

@@ -68,10 +68,26 @@
                 {% endif %}
                 {% if is_granted('ROLE_ADMINBYPLACE') %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_adminbyplace') }}">Admin By Place Dashboard</a>
+                        <a class="nav-link" href="{{ path('app_welcomepage') }}">Admin By Place Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_activity') }}">New Activity</a>
+                        <a class="nav-link" href="{{ path('app_activity_new') }}">New Activity</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Activities
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% block activityadminbyplace %}
+                            {% if activities is not empty %}
+                                {% for activity in activities %}
+                                    <a class="dropdown-item" href="{{ path('app_participations_donors', {'userId': app.user.id, 'activityId': activity.id}) }}">{{ activity.description }}</a>
+                            {% else %}
+                                    <a class="dropdown-item" href="#">No activities</a>
+                                {% endfor %}
+                            {% endif %}
+                            {% endblock activityadminbyplace     %}
+                        </div>
                     </li>
                 {% endif %}
             </ul>

@@ -18,32 +18,33 @@ class Participation
     private ?int $id = null;
 
 
-
-    /**
-     * @var Collection<int, Donor>
-     */
-    #[ORM\OneToMany(targetEntity: Donor::class, mappedBy: 'participation')]
-    private Collection $donor;
-
-    #[ORM\ManyToOne(inversedBy: 'participations')]
-    private ?Activity $activities = null;
-
-    #[ORM\Column]
-    private ?bool $approved = null;
+    #[ORM\ManyToOne(inversedBy: 'participationsActivity')]
+    private ?Activity $activity = null;
 
     /**
      * @var Collection<int, Nurse>
      */
-    #[ORM\ManyToMany(targetEntity: Nurse::class, inversedBy: 'participations')]
-    private Collection $nurse;
+    #[ORM\ManyToMany(targetEntity: Nurse::class, inversedBy: 'participationsNurses')]
+    private Collection $possibleNurses;
+
+    #[ORM\ManyToOne(inversedBy: 'participationsNurse')]
+    private ?Nurse $confirmedNurse = null;
+
+    #[ORM\ManyToOne(inversedBy: 'participationsAdminByPlace')]
+    private ?Adminbyplace $adminByPlace = null;
+
+    #[ORM\ManyToOne(inversedBy: 'participationsDonor')]
+    private ?Donor $Donor = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $approvedByNurse = null;
+    private ?bool $confirmedByNurse = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $confirmedByAdmin = null;
 
     public function __construct()
     {
-        $this->donor = new ArrayCollection();
-        $this->nurse = new ArrayCollection();
+        $this->possibleNurses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,23 +52,12 @@ class Participation
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Donor>
-     */
-    public function getDonor(): Collection
+    public function getDonor(): Donor
     {
-        return $this->donor;
+        return $this->Donor;
     }
 
-    public function addDonor(Donor $donor): static
-    {
-        if (!$this->donor->contains($donor)) {
-            $this->donor->add($donor);
-            $donor->setParticipation($this);
-        }
 
-        return $this;
-    }
 
     public function removeDonor(Donor $donor): static
     {
@@ -81,29 +71,6 @@ class Participation
         return $this;
     }
 
-    public function getActivities(): ?Activity
-    {
-        return $this->activities;
-    }
-
-    public function setActivities(?Activity $activities): static
-    {
-        $this->activities = $activities;
-
-        return $this;
-    }
-
-    public function isApproved(): ?bool
-    {
-        return $this->approved;
-    }
-
-    public function setApproved(bool $approved): static
-    {
-        $this->approved = $approved;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Nurse>
@@ -129,14 +96,96 @@ class Participation
         return $this;
     }
 
-    public function isApprovedByNurse(): ?bool
+
+
+
+    public function getActivity(): ?Activity
     {
-        return $this->approvedByNurse;
+        return $this->activity;
     }
 
-    public function setApprovedByNurse(?bool $approvedByNurse): static
+    public function setActivity(?Activity $activity): static
     {
-        $this->approvedByNurse = $approvedByNurse;
+        $this->activity = $activity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Nurse>
+     */
+    public function getPossibleNurses(): Collection
+    {
+        return $this->possibleNurses;
+    }
+
+    public function addPossibleNurse(Nurse $possibleNurse): static
+    {
+        if (!$this->possibleNurses->contains($possibleNurse)) {
+            $this->possibleNurses->add($possibleNurse);
+        }
+
+        return $this;
+    }
+
+    public function removePossibleNurse(Nurse $possibleNurse): static
+    {
+        $this->possibleNurses->removeElement($possibleNurse);
+
+        return $this;
+    }
+
+    public function getConfirmedNurse(): ?Nurse
+    {
+        return $this->confirmedNurse;
+    }
+
+    public function setConfirmedNurse(?Nurse $confirmedNurse): static
+    {
+        $this->confirmedNurse = $confirmedNurse;
+
+        return $this;
+    }
+
+    public function getAdminByPlace(): ?Adminbyplace
+    {
+        return $this->adminByPlace;
+    }
+
+    public function setAdminByPlace(?Adminbyplace $adminByPlace): static
+    {
+        $this->adminByPlace = $adminByPlace;
+
+        return $this;
+    }
+
+    public function setDonor(?Donor $Donor): static
+    {
+        $this->Donor = $Donor;
+
+        return $this;
+    }
+
+    public function isConfirmedByNurse(): ?bool
+    {
+        return $this->confirmedByNurse;
+    }
+
+    public function setConfirmedByNurse(?bool $confirmedByNurse): static
+    {
+        $this->confirmedByNurse = $confirmedByNurse;
+
+        return $this;
+    }
+
+    public function isConfirmedByAdmin(): ?bool
+    {
+        return $this->confirmedByAdmin;
+    }
+
+    public function setConfirmedByAdmin(?bool $confirmedByAdmin): static
+    {
+        $this->confirmedByAdmin = $confirmedByAdmin;
 
         return $this;
     }

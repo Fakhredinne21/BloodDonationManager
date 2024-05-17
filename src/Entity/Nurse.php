@@ -31,10 +31,24 @@ class Nurse extends Users
     #[ORM\ManyToMany(targetEntity: Participation::class, mappedBy: 'nurse')]
     private Collection $participations;
 
+    /**
+     * @var Collection<int, Participation>
+     */
+    #[ORM\ManyToMany(targetEntity: Participation::class, mappedBy: 'possibleNurses')]
+    private Collection $participationsNurses;
+
+    /**
+     * @var Collection<int, Participation>
+     */
+    #[ORM\OneToMany(targetEntity: Participation::class, mappedBy: 'confirmedNurse')]
+    private Collection $participationsNurse;
+
     public function __construct()
     {
         $this->activities = new ArrayCollection();
         $this->participations = new ArrayCollection();
+        $this->participationsNurses = new ArrayCollection();
+        $this->participationsNurse = new ArrayCollection();
     }
 
     public function getEmail(): ?string
@@ -110,5 +124,40 @@ class Nurse extends Users
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipationsNurses(): Collection
+    {
+        return $this->participationsNurses;
+    }
+
+    public function addParticipationsNurse(Participation $participationsNurse): static
+    {
+        if (!$this->participationsNurses->contains($participationsNurse)) {
+            $this->participationsNurses->add($participationsNurse);
+            $participationsNurse->addPossibleNurse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipationsNurse(Participation $participationsNurse): static
+    {
+        if ($this->participationsNurses->removeElement($participationsNurse)) {
+            $participationsNurse->removePossibleNurse($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipationsNurse(): Collection
+    {
+        return $this->participationsNurse;
     }
 }

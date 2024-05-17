@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Participation;
 use App\Repository\ActivityRepository;
 use App\Repository\DonorRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,25 +35,39 @@ class DonorController extends AbstractController
     {
         $activity = $this->activityRepository->find($id);
 
-        return $this->render('donor/index.html.twig', ['activity'=>$activity,
+        return $this->render('donor/index.html.twig',
+            ['activity'=>$activity,
             'controller_name' => 'DonorController',
         ]);
 
     }
     #[Route('/donor/participation/confirmation{idact}/{id}', name: 'app_confirm_participation')]
-    public function confirm(int $idact,int $id): Response
+    public function confirm(int $idact, int $id): Response
     {
         $activity = $this->activityRepository->find($idact);
-        $donor = $this->donorRepository->find($id);
-        $donor->addParticipation($activity);
+        $donor = $this->donorRepository->findOneBy(['user' => $id]);
+
+        // Create a new Participation
+        $participation = new Participation();
+        $participation->setActivity($activity);
+        $participation->setDonor($donor);
+        $participation->setAdminByPlace($activity->getAdminByPlace());
+        $participation->setConfirmedNurse($activity->getNurses()->first());
         $activity->addDonor($donor);
-        $this->activityRepository->updateActivity($activity);
-        $this->donorRepository->updateDonor($donor);
-        return $this->render('donor/index.html.twig', ['activity'=>$activity,
-            'controller_name' => 'DonorController','message'=>'Participation is Confirmed'
-        ]);
+        $donor->setParticipation($participation);
+        foreach ($activity->getNurses() as $nurse){
+            $participation->addPossibleNurse($nurse);
+        }
+        // Add the Participation to the Activity and the Donor
+        $activity->addParticipationsActivity($participation);
+        $donor->addParticipationsDonor($participation);
 
+        // Persist and flush the Participation
+        $this->entityManager->persist($participation);
+        $this->entityManager->persist($activity);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('app_welcomepage');
     }
-
 
 }

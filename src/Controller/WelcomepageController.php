@@ -80,6 +80,7 @@ class WelcomepageController extends AbstractController
                 // Render the template without passing the user
                 return $this->render('base.html.twig', [
                     'controller_name' => 'WelcomepageController',
+                    'activities' => $activities,
                 ]);
             }
 
@@ -95,6 +96,7 @@ class WelcomepageController extends AbstractController
             return $this->render('base.html.twig', [
                 'controller_name' => 'WelcomepageController',
                 'activities' => $activities,
+
             ]);
         }
     }

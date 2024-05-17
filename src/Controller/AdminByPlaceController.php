@@ -24,9 +24,65 @@ class AdminByPlaceController extends AbstractController
     #[Route('/', name: 'app_adminplace')]
     public function index(): Response
     {
+
+        $activities = $this->entityManager->getRepository(Activity::class)->findBy(['adminbyplace' => $this->getUser()]);
         return $this->render('admin_by_place/index.html.twig', [
             'controller_name' => 'adminplaceController',
+            'activities' => $activities,
         ]);
+    }
+
+    #[Route('/participate/{userId}/{activityId}/participations', name: 'app_participations_donors')]
+    public function getParticipations($userId ,$activityId )
+    {
+        $userIdAdmin = $this->entityManager->getRepository(Adminbyplace::class)->findOneBy(['user' => $userId]);
+        $activities = $this->entityManager->getRepository(Activity::class)->findBy(['adminbyplace' => $userIdAdmin, 'id' => $activityId]);
+
+        $participations = [];
+        foreach ($activities as $activity) {
+            $activityParticipations = $this->   entityManager->getRepository(Participation::class)->findBy(['activity' => $activity, 'confirmedByNurse' => 1]);
+            if (empty($activityParticipations)) {
+                error_log('No participations found for activity with id: ' . $activity->getId());
+            }
+            $participations = array_merge($participations, $activityParticipations);
+        }
+
+        $donors = [];
+        foreach ($participations as $participation) {
+            $donor = $participation->getDonor();
+            if ($donor === null) {
+                error_log('No donor found for participation with id: ' . $participation->getId());
+            } else {
+                $donors[] = $donor;
+            }
+        }
+
+        return $this->render('admin_by_place/participations.html.twig', [
+            'donors' => $donors,
+        ]);
+    }
+    #[Route('/donor/{id}/validate', name: 'donor_validate')]
+    public function validateDonor($id)
+    {
+        $partcipation = $this->entityManager->getRepository(Participation::class)->find($id);
+        if ($partcipation) {
+            $partcipation->setConfirmedByAdmin(true);
+            $this->entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_participations_donors', ['userId' => $partcipation->getAdminByPlace()->getUser()->getId(), 'activityId' => $partcipation->getActivity()->getId()]);
+
+    }
+    #[Route('/donor/{id}/invalidate', name: 'donor_invalidate')]
+    public function invalidateDonor($id)
+    {
+        $partcipation = $this->entityManager->getRepository(Participation::class)->find($id);
+        if ($partcipation) {
+            $partcipation->setConfirmedByAdmin(false);
+            $this->entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_participations_donors', ['userId' => $partcipation->getAdminByPlace()->getUser()->getId(), 'activityId' => $partcipation->getActivity()->getId()]);
     }
 
     #[Route('/activity/new', name: 'app_activity_new')]

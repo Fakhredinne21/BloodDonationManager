@@ -35,19 +35,29 @@ class Donor extends Users
     #[ORM\Column(type: "string", length: 255)]
     private ?string $Email = null;
 
-    /**
-     * @var Collection<int, Activity>
-     */
-    #[ORM\ManyToMany(targetEntity: Activity::class, mappedBy: 'donors')]
-    private Collection $participations;
+
 
     #[ORM\ManyToOne(inversedBy: 'donor')]
     private ?Participation $participation = null;
+
+    /**
+     * @var Collection<int, Participation>
+     */
+    #[ORM\ManyToMany(targetEntity: Participation::class, mappedBy: 'approvedDonors')]
+    private Collection $ApprovedPartcipations;
+
+    /**
+     * @var Collection<int, Participation>
+     */
+    #[ORM\OneToMany(targetEntity: Participation::class, mappedBy: 'Donor')]
+    private Collection $participationsDonor;
 
     public function __construct()
     {
         $this->id = new ArrayCollection();
         $this->participations = new ArrayCollection();
+        $this->ApprovedPartcipations = new ArrayCollection();
+        $this->participationsDonor = new ArrayCollection();
     }
 
     public function getState(): ?int
@@ -62,10 +72,7 @@ class Donor extends Users
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -168,6 +175,63 @@ class Donor extends Users
     public function setParticipation(?Participation $participation): static
     {
         $this->participation = $participation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getApprovedPartcipations(): Collection
+    {
+        return $this->ApprovedPartcipations;
+    }
+
+    public function addApprovedPartcipation(Participation $approvedPartcipation): static
+    {
+        if (!$this->ApprovedPartcipations->contains($approvedPartcipation)) {
+            $this->ApprovedPartcipations->add($approvedPartcipation);
+            $approvedPartcipation->addApprovedDonor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApprovedPartcipation(Participation $approvedPartcipation): static
+    {
+        if ($this->ApprovedPartcipations->removeElement($approvedPartcipation)) {
+            $approvedPartcipation->removeApprovedDonor($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipationsDonor(): Collection
+    {
+        return $this->participationsDonor;
+    }
+
+    public function addParticipationsDonor(Participation $participationsDonor): static
+    {
+        if (!$this->participationsDonor->contains($participationsDonor)) {
+            $this->participationsDonor->add($participationsDonor);
+            $participationsDonor->setDonor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipationsDonor(Participation $participationsDonor): static
+    {
+        if ($this->participationsDonor->removeElement($participationsDonor)) {
+            // set the owning side to null (unless already changed)
+            if ($participationsDonor->getDonor() === $this) {
+                $participationsDonor->setDonor(null);
+            }
+        }
 
         return $this;
     }
